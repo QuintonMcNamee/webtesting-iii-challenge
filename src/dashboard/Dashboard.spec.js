@@ -18,14 +18,30 @@ describe('<Dashboard />', () => {
   it('displays open/closed', () => {
     const { getByTestId, queryByText } = render(<Dashboard />);
     expect(queryByText(/Open/i)).toBeTruthy();
-    fireEvent.click(getByTestId(/controlsButton2/i));
+    fireEvent.click(getByTestId(/closeButton/i));
     expect(queryByText(/Closed/i)).toBeTruthy();
   });
 
   it('displays locked/unlocked', () => {
     const { getByTestId, queryByText } = render(<Dashboard />);
     expect(queryByText(/Unlocked/i)).toBeTruthy();
-    fireEvent.click(getByTestId(/controlsButton1/i));
+    fireEvent.click(getByTestId(/lockButton/i));
     expect(queryByText(/Locked/i)).toBeTruthy();
+  })
+
+  // it('uses "red-led" class when locked or closed', () => {
+  //   const { getByTestId, queryByText } = render(<Dashboard />);
+  //   const expected = 'led red-led';
+  //   expect(queryByText(/Locked/i)).toBeTruthy();
+  //   expect(closed).toBeTruthy();
+  // })
+
+  it('closed toggle button should be disabled if the gate is locked', () => {
+    const { queryByText, getByTestId } = render(<Dashboard />);
+
+    fireEvent.click(getByTestId('closeButton'));
+    fireEvent.click(getByTestId('lockButton'));
+
+    expect(queryByText('Open Gate')).toBeTruthy();
   })
 });
